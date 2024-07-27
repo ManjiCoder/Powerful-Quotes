@@ -71,3 +71,18 @@ export async function PATCH(req: NextRequest) {
     return new Response("Something Went Wrong", { status: 400 });
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const body = await req.json();
+    if (body) {
+      await dbConnect();
+      const data = await QuotesModel.findByIdAndDelete(body.id);
+      return Response.json(data);
+    }
+    return Response.json(0);
+  } catch (error) {
+    console.log(error);
+    return new Response("Something Went Wrong", { status: 400 });
+  }
+}
