@@ -26,9 +26,18 @@ export async function GET(req: NextRequest) {
   return Response.json(data);
 }
 
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  if (body) {
+    await dbConnect();
+    const data = await QuotesModel.create(body);
+    return Response.json(data);
+  }
+  return Response.json(0);
+}
+
 export async function PATCH(req: NextRequest) {
   const body = await req.json();
-  console.log(body);
   if (body) {
     await dbConnect();
     const data = await QuotesModel.findByIdAndUpdate(body.id);

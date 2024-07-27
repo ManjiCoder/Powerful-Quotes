@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 const quotesSchema = new Schema(
   {
-    quote: String,
-    authur: String,
-    isEnable: Boolean,
+    quote: { type: String, required: true, trim: true },
+    authur: { type: String, required: true, trim: true },
+    isEnabled: { type: Boolean, required: true, default: true },
   },
   { timestamps: true }
 );
