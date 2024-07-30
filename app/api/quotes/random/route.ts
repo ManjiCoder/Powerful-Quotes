@@ -1,3 +1,4 @@
+import QuotesModel from '@/app/models/quotes';
 import RandomModel from '@/app/models/randomNumber';
 import dbConnect from '@/app/utils/db';
 import { BASE_URL } from '@/app/utils/service';
@@ -8,8 +9,8 @@ export async function GET() {
     await dbConnect();
     // const filter = '?filter=isEnabled||eq||true';
     const today = new Date().toISOString().split('T')[0];
+    let quote;
     const randomQuote = await RandomModel.findOne({ date: today });
-    let quote = randomQuote;
 
     if (!randomQuote) {
       const { data } = await axios.get(BASE_URL + '/quotes');
@@ -20,6 +21,8 @@ export async function GET() {
         number: randomNumber,
       });
       quote = data[randomNumber];
+    } else {
+      quote = await QuotesModel.findById(randomQuote.quoteId);
     }
     return Response.json({ quote: quote, today });
   } catch (error) {
