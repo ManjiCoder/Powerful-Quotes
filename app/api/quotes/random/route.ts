@@ -8,8 +8,9 @@ export async function GET() {
     await dbConnect();
     // const filter = '?filter=isEnabled||eq||true';
     const today = new Date().toISOString().split('T')[0];
-
     const randomQuote = await RandomModel.findOne({ date: today });
+    let quote = randomQuote;
+
     if (!randomQuote) {
       const { data } = await axios.get(BASE_URL + '/quotes');
       const randomNumber = await Math.floor(Math.random() * data.length);
@@ -18,8 +19,9 @@ export async function GET() {
         quoteId: data[randomNumber]._id,
         number: randomNumber,
       });
+      quote = data[randomNumber];
     }
-    return Response.json({ randomQuote, today });
+    return Response.json({ quote: quote, today });
   } catch (error) {
     console.log(error);
     return new Response(JSON.stringify({ msg: 'Something went wrong!' }), {
