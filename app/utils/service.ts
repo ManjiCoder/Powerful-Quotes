@@ -1,5 +1,8 @@
 import axios from 'axios';
-export const BASE_URL = process.env.BASE_URL || 'http://localhost:3000/api';
+export const BASE_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000/api'
+    : process.env.BASE_URL;
 
 export const service = axios.create({
   url: BASE_URL,
