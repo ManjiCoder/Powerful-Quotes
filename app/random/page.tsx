@@ -2,8 +2,8 @@ import axios from "axios";
 import Image from "next/image";
 import { BASE_URL } from "../utils/service";
 
-export default async function Home() {
-  const {data} = await axios.get(`${BASE_URL}/quotes/random`)
+export default async function Random() {
+  const {data} = await axios.post(`${BASE_URL}/quotes/random`)
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
