@@ -13,24 +13,21 @@ export async function GET(req: NextRequest) {
     const filter = searchParams.get('filter');
     const sort = searchParams.get('sort');
 
-    const filterObj = {};
-    const sortObj = {
+    const filterObj: Record<string, string | number | boolean> = {};
+    const sortObj: Record<string, any> = {
       createdAt: -1,
     };
 
     if (filter) {
       const filterArr = filter.split('||');
-      // @ts-ignore
       filterObj[filterArr[0]] = JSON.parse(filterArr[2]);
     }
     if (sort) {
       const sortArr = sort.split(',');
-      // @ts-ignore
       sortObj[sortArr[0]] = JSON.parse(sortArr[1]);
     }
     await dbConnect();
 
-    // @ts-ignore
     const data = await QuotesModel.find(filterObj, ignoreObj).sort(sortObj);
 
     return Response.json(data);
