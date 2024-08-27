@@ -7,16 +7,22 @@ const ignoreObj = {
   updatedAt: 0,
 };
 
+enum Operators {
+  'match' = 'match',
+}
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
     const filter = searchParams.get('filter');
     const sort = searchParams.get('sort');
+    const search = searchParams.get('search');
 
     const filterObj: Record<string, string | number | boolean> = {};
     const sortObj: Record<string, any> = {
       createdAt: -1,
     };
+    const searchObj: Record<string, any> = {};
 
     if (filter) {
       const filterArr = filter.split('||');
@@ -29,7 +35,15 @@ export async function GET(req: NextRequest) {
     await dbConnect();
 
     const data = await QuotesModel.find(filterObj, ignoreObj).sort(sortObj);
-
+    if (search) {
+      const [field, operator, value] = search.split('||');
+      if (operator === Operators.match) {
+        const matchData = data.filter((obj) =>
+          obj[field].toLowerCase().includes(value.toLowerCase())
+        );
+        return Response.json(matchData);
+      }
+    }
     return Response.json(data);
   } catch (error) {
     console.log(error);
