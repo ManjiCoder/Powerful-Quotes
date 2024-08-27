@@ -22,7 +22,6 @@ export async function GET(req: NextRequest) {
     const sortObj: Record<string, any> = {
       createdAt: -1,
     };
-    const searchObj: Record<string, any> = {};
 
     if (filter) {
       const filterArr = filter.split('||');
