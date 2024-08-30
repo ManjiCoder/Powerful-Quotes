@@ -28,8 +28,10 @@ const calculateTimeDiff = (
     .padStart(2, '0');
   // console.log({ days, hrs, mins, secs });
   if (targetElemt) {
+    const ongoingDay = targetElemt.querySelector('h1');
     const [dd, hh, mm, ss] = Array.from(targetElemt.querySelectorAll('h2'));
     // @ts-ignore
+    ongoingDay.querySelectorAll('span')[0].innerHTML = days;
     dd.querySelectorAll('span')[0].innerHTML = days;
     if (days > 2) {
       dd.querySelectorAll('span')[1].innerHTML = 'Days';
@@ -72,7 +74,7 @@ export default function DaysInfo() {
       className="relative max-sm:left-8 flex flex-col place-items-center text-balance"
     >
       <h1 className="mb-3 text-4xl md:text-6xl font-semibold">
-        <span className="text-mark">{days || 0}</span> / 150{' '}
+        <span className="text-mark">{0}</span> / 150{' '}
         <span className="text-xl md:text-3xl">Days</span>{' '}
       </h1>
       <header className="flex place-items-center space-x-3 text-center">
