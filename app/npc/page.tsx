@@ -1,13 +1,11 @@
 import axios from 'axios';
-import { differenceInDays } from 'date-fns';
+import DaysInfo from '../components/DaysInfo';
 import { BASE_URL } from '../utils/service';
 
 export default async function NPC() {
   const res = await axios.get(`${BASE_URL}/quotes?search=author||match||apj`);
   const data = res.data[0];
-  const startDate = new Date().setHours(0, 0, 0, 0);
-  const days = differenceInDays(startDate, new Date());
-  console.log(days);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
@@ -30,17 +28,7 @@ export default async function NPC() {
           height={37}
           priority
         /> */}
-        <div>
-          <h1 className="mb-3 text-6xl font-semibold md:ml-20">
-            01 <span className="text-5xl"> Days</span>
-          </h1>
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-        </div>
+        <DaysInfo />
       </div>
 
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
