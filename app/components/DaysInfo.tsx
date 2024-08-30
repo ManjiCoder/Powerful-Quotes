@@ -32,6 +32,7 @@ const calculateTimeDiff = (
     const [dd, hh, mm, ss] = Array.from(targetElemt.querySelectorAll('h2'));
     // @ts-ignore
     ongoingDay.querySelectorAll('span')[0].innerHTML = days;
+    // @ts-ignore
     dd.querySelectorAll('span')[0].innerHTML = days;
     if (days > 2) {
       dd.querySelectorAll('span')[1].innerHTML = 'Days';
