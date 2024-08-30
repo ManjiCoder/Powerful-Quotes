@@ -16,6 +16,10 @@ const calculateTimeDiff = (
   const hrs = (differenceInHours(currentDate, startDate) % 24)
     .toString()
     .padStart(2, '0');
+  console.log({
+    startDate: new Date(startDate).toLocaleTimeString(),
+    currentDate: new Date(currentDate).toLocaleTimeString(),
+  });
   const mins = (differenceInMinutes(currentDate, startDate) % 60)
     .toString()
     .padStart(2, '0');
@@ -43,7 +47,7 @@ export default function DaysInfo() {
   const getDates = () => {
     // @ts-ignore
     const startDate = JSON.parse(localStorage.getItem('startDate'));
-    return startDate || 1724956200000;
+    return startDate;
   };
 
   const ref = useRef<HTMLDivElement>(null);
@@ -52,9 +56,8 @@ export default function DaysInfo() {
     const startDate = getDates();
     const targetElemt = ref.current;
     if (startDate) {
-      const currentDate = new Date();
       const intervalId = setInterval(
-        () => calculateTimeDiff(targetElemt, startDate, new Date()),
+        () => calculateTimeDiff(targetElemt, 1724956200000, new Date()),
         1000
       );
       return () => {
