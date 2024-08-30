@@ -7,7 +7,7 @@ export default function StartBtn() {
   return (
     <button
       type="button"
-      className="relative bottom-20 z-50 cursor-pointer bg-white text-lg text-black font-semibold px-5 py-1 rounded-lg"
+      className="invisible relative bottom-20 z-50 cursor-pointer bg-white text-lg text-black font-semibold px-5 py-1 rounded-lg"
       onClick={setStartDate}
     >
       Start

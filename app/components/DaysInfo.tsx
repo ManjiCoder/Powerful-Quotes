@@ -64,7 +64,10 @@ export default function DaysInfo() {
   }, []);
 
   return (
-    <div ref={ref} className="flex flex-col place-items-center text-balance">
+    <div
+      ref={ref}
+      className="relative max-sm:left-8 flex flex-col place-items-center text-balance"
+    >
       <h1 className="mb-3 text-4xl md:text-6xl font-semibold">
         <span className="text-mark">{0}</span> / 150{' '}
         <span className="text-xl md:text-3xl">Days</span>{' '}
