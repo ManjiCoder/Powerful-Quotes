@@ -14,7 +14,7 @@ export default function DaysInfo() {
   console.log({ days, hrs, mins, secs });
   return (
     <div className="flex flex-col place-items-center text-balance">
-      <h1 className="mb-3 text-6xl font-semibold md:ml-20">
+      <h1 className="mb-3 text-6xl font-semibold">
         <span className="text-mark">{days}</span> / 150{' '}
         <span className="text-5xl">Days</span>{' '}
       </h1>
