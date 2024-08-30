@@ -7,16 +7,19 @@ import {
 } from 'date-fns';
 import { useLayoutEffect, useRef } from 'react';
 
-const calculateTimeDiff = (targetElemt: HTMLDivElement | null) => {
-  const startDate = new Date().setHours(0, 0, 0, 0);
-  const days = differenceInDays(new Date(), startDate);
-  const hrs = (differenceInHours(new Date(), startDate) % 24)
+const calculateTimeDiff = (
+  targetElemt: HTMLDivElement | null,
+  startDate: Date | number,
+  currentDate: Date
+) => {
+  const days = differenceInDays(currentDate, startDate);
+  const hrs = (differenceInHours(currentDate, startDate) % 24)
     .toString()
     .padStart(2, '0');
-  const mins = (differenceInMinutes(new Date(), startDate) % 60)
+  const mins = (differenceInMinutes(currentDate, startDate) % 60)
     .toString()
     .padStart(2, '0');
-  const secs = (differenceInSeconds(new Date(), startDate) % 60)
+  const secs = (differenceInSeconds(currentDate, startDate) % 60)
     .toString()
     .padStart(2, '0');
   // console.log({ days, hrs, mins, secs });
@@ -24,20 +27,40 @@ const calculateTimeDiff = (targetElemt: HTMLDivElement | null) => {
     const [dd, hh, mm, ss] = Array.from(targetElemt.querySelectorAll('h2'));
     // @ts-ignore
     dd.querySelectorAll('span')[0].innerHTML = days;
+    if (days > 2) {
+      dd.querySelectorAll('span')[1].innerHTML = 'Days';
+    }
     hh.querySelectorAll('span')[0].innerHTML = hrs;
+    if (parseInt(hrs) > 2) {
+      hh.querySelectorAll('span')[1].innerHTML = 'Hrs';
+    }
     mm.querySelectorAll('span')[0].innerHTML = mins;
     ss.querySelectorAll('span')[0].innerHTML = secs;
   }
 };
 
 export default function DaysInfo() {
+  const getDates = () => {
+    // @ts-ignore
+    const startDate = JSON.parse(localStorage.getItem('startDate'));
+    return startDate || 1724956200000;
+  };
+
   const ref = useRef<HTMLDivElement>(null);
+
   useLayoutEffect(() => {
+    const startDate = getDates();
     const targetElemt = ref.current;
-    const intervalId = setInterval(() => calculateTimeDiff(targetElemt), 1000);
-    return () => {
-      clearInterval(intervalId);
-    };
+    if (startDate) {
+      const currentDate = new Date();
+      const intervalId = setInterval(
+        () => calculateTimeDiff(targetElemt, startDate, new Date()),
+        1000
+      );
+      return () => {
+        clearInterval(intervalId);
+      };
+    }
   }, []);
 
   return (
@@ -51,11 +74,11 @@ export default function DaysInfo() {
 
         <h2 className="min-w-14 md:min-w-24 mb-3 mt-4 text-2xl font-semibold flex space-x-1 items-baseline">
           <span className="text-mark">{0}</span>
-          <span className="text-base">{0 > 2 ? 'Days' : 'Day'}</span>
+          <span className="text-base">Day</span>
         </h2>
         <h2 className="min-w-14 md:min-w-24 mb-3 mt-4 text-2xl font-semibold flex space-x-1 items-baseline">
           <span className="text-mark">{0}</span>
-          <span className="text-base">{0 > 2 ? 'Hrs' : 'Hr'}</span>
+          <span className="text-base">Hr</span>
         </h2>
         <h2 className="min-w-14 md:min-w-24 mb-3 mt-4 text-2xl font-semibold flex space-x-1 items-baseline">
           <span className="text-mark">{0}</span>

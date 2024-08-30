@@ -1,4 +1,5 @@
 import DaysInfo from '../components/DaysInfo';
+import StartBtn from '../components/StartBtn';
 
 export const metadata = {
   title: 'If you want to shine like the sun ☀️, first 🔥burn like the sun',
@@ -30,6 +31,7 @@ export default async function NPC() {
         /> */}
         <DaysInfo />
       </div>
+      <StartBtn />
     </main>
   );
 }
