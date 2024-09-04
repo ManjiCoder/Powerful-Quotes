@@ -60,7 +60,7 @@ export default function DaysInfo() {
     const targetElemt = ref.current;
     if (startDate) {
       const intervalId = setInterval(
-        () => calculateTimeDiff(targetElemt, 1724956200000, new Date()),
+        () => calculateTimeDiff(targetElemt, 1725474600000, new Date()),
         1000
       );
       return () => {
